@@ -37,7 +37,8 @@ custom agendas
 *** capturing
 #+BEGIN_SRC emacs-lisp
   (setq org-default-notes-file "~/org/tasks.org")
-  (setq org-inbox-file "~/inbox.org")
+  (setq org-inbox-file "~/org/inbox.org")
+  (setq org-work-file "~/org/wtasks.org")
   (setq ledger-file "~/Documents/notes/ledger")
 
   (setq org-capture-templates
@@ -47,23 +48,27 @@ custom agendas
            "* TODO %^{name}\n %?\n  %i\n")
           ("n" "Note/Data" entry (file+headline org-inbox-file "Notes/Data")
            "* %?   \n  %i\n  %u\n  %a")
-
+        
+          ;; work captures
+          ("w" "Work Item" entry (file org-work-file)
+           "* TODO [[[%^{story}][STORY]]] %^{description}\n%?")
+        
           ;; ledger captures
           ("l" "ledger entries")
           ("le" "expense" plain
            (file ledger-file)
            "
-%(org-read-date) * %^{name}
-    Expenses:%^{to}  $%^{amount}
-    Assets:%^{from}
-  ")
+  %(org-read-date) * %^{name}
+      Expenses:%^{to}  $%^{amount}
+      Assets:%^{from}
+    ")
           ("li" "income" plain
            (file ledger-file)
            "
-%(org-read-date) * %^{name}
-    Assets:%^{to}  $%^{amount}
-    Income:%^{from}
-  ")))
+  %(org-read-date) * %^{name}
+      Assets:%^{to}  $%^{amount}
+      Income:%^{from}
+    ")))
 #+END_SRC
 
 *** refiling
