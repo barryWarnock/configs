@@ -7,4 +7,4 @@ HISTSIZE=1000
 SAVEHIST=10000
 
 #editor
-EDITOR="emacsclient -c"
+export EDITOR=vim

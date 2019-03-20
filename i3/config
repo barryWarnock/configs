@@ -34,11 +34,7 @@ mouse_warping none
 
 # start programs
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
-# start emacs
-bindsym $mod+e exec emacsclient -c -a=''
-# start alacritty
-bindsym $mod+c exec alacritty
+bindsym $mod+Return exec alacritty
 # start chrome
 bindsym $mod+g exec google-chrome
 # lock screen
