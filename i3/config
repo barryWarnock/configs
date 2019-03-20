@@ -29,13 +29,24 @@ font pango:monospace 8
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+#don't warp mouse to center of workspace when switching outputs
+mouse_warping none
+
 # start programs
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 # start emacs
-bindsym $mod+e exec emacs
+bindsym $mod+e exec emacsclient -c -a=''
+# start alacritty
+bindsym $mod+c exec alacritty
 # start chrome
 bindsym $mod+g exec google-chrome
+# lock screen
+bindsym $mod+o exec i3lock -c 606060
+
+# move workspace
+bindsym $mod+Control+h move workspace to output left
+bindsym $mod+Control+l move workspace to output right
 
 # kill focused window
 bindsym $mod+Shift+q kill
