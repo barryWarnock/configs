@@ -2,10 +2,9 @@
 alias ls='ls --color=auto'
 alias ll='ls -l'
 alias la='ls -la'
-
-#emacs client aliases
-alias cemacs='emacsclient -c'
-#when emacs is started from the terminal, keep it there
-alias temacs='emacs -nw'
+alias vi='vim'
 
 alias centos='docker run -i -t --rm=true centos /bin/bash'
+
+alias k='kubectl'
+alias kc='source <(kubectl completion zsh)'

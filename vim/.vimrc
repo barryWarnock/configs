@@ -1,14 +1,21 @@
 " Use system clipboard
 set clipboard=unnamedplus
+autocmd VimLeave * call system("echo -n $'" . escape(getreg(), "'") . "' | xsel -ib")
 
 " auto change directory 
-set autochdir
+autocmd BufEnter * silent! lcd %:p:h
 
 " no decorations in gui mode
 set guioptions=pi "scrollbar
 
 " show line numbers
 set number
+
+" incremental search
+set incsearch
+
+" 4 space tabs
+set tabstop=4 shiftwidth=4 expandtab
 
 " leader key spacemacs style bindings
 nmap <SPACE> <leader>
@@ -20,9 +27,10 @@ nmap <leader>F :edit
 nmap <leader>bb :Buffers<CR>
 nmap <leader>bd :bd<CR>
 nmap <leader>n :NERDTreeToggle<CR>
+nmap <leader>c :!
 
 " dont yank pasted over text
-vnoremap p "_dP
+vnoremap p "_dp
 
 " easier split movement / bindings
 set splitbelow
@@ -39,6 +47,10 @@ set undodir=$HOME/.vim/undo
 
 set undolevels=1000
 set undoreload=10000
+
+" Don't dirty up directories with files I don't need to persist
+set backupdir=/tmp//
+set directory=/tmp//
 
 " dont overwrite symlinks when saving
 set backupcopy=auto

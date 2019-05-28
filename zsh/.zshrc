@@ -14,6 +14,8 @@ bindkey -v
 bindkey '^P' up-history
 bindkey '^N' down-history
 bindkey '^r' history-incremental-search-backward
+bindkey '^A' beginning-of-line
+bindkey '^E' end-of-line
 
 precmd() { RPROMPT="" }
 function zle-line-init zle-keymap-select {
