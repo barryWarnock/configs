@@ -7,6 +7,7 @@ Plug 'jceb/vim-orgmode'
 Plug 'vim-scripts/utl.vim'
 Plug 'vim-scripts/SyntaxRange'
 Plug 'vim-airline/vim-airline'
+Plug 'kovisoft/slimv'
 
 Plug 'nanotech/jellybeans.vim'
 

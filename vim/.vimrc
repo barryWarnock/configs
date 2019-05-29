@@ -17,6 +17,10 @@ set incsearch
 " 4 space tabs
 set tabstop=4 shiftwidth=4 expandtab
 
+" highlight line when in insert
+autocmd InsertEnter * set cul
+autocmd InsertLeave * set nocul
+
 " leader key spacemacs style bindings
 nmap <SPACE> <leader>
 nmap <leader><SPACE> :
