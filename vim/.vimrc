@@ -23,18 +23,19 @@ autocmd InsertLeave * set nocul
 
 " leader key spacemacs style bindings
 nmap <SPACE> <leader>
+map <Leader> <Plug>(easymotion-prefix)
 nmap <leader><SPACE> :
-nmap <leader>ff :Files ~<CR>
 nmap <leader>fs :w<CR>
 nmap <leader>fe :edit ~/.vimrc<CR>
 nmap <leader>F :edit 
 nmap <leader>bb :Buffers<CR>
+nmap <leader>bs :edit /tmp/scratch
 nmap <leader>bd :bd<CR>
 nmap <leader>n :NERDTreeToggle<CR>
 nmap <leader>c :!
 
 " dont yank pasted over text
-vnoremap p "_dp
+vnoremap p "_c<esc>p
 
 " easier split movement / bindings
 set splitbelow

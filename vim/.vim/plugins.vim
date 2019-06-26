@@ -8,6 +8,7 @@ Plug 'vim-scripts/utl.vim'
 Plug 'vim-scripts/SyntaxRange'
 Plug 'vim-airline/vim-airline'
 Plug 'kovisoft/slimv'
+Plug 'easymotion/vim-easymotion'
 
 Plug 'nanotech/jellybeans.vim'
 
