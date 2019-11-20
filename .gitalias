@@ -1,0 +1,4 @@
+[alias]
+    flog=!git log --pretty=oneline | fzf
+    frebase=!git rebase -i $(git flog | awk '{print $1}')~1
+    pwl=push --force-with-lease

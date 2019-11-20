@@ -27,11 +27,12 @@ map <Leader> <Plug>(easymotion-prefix)
 nmap <leader><SPACE> :
 nmap <leader>fs :w<CR>
 nmap <leader>fe :edit ~/.vimrc<CR>
+nmap <leader>fr :source ~/.vimrc<CR>
 nmap <leader>F :edit 
 nmap <leader>bb :Buffers<CR>
 nmap <leader>bs :edit /tmp/scratch
 nmap <leader>bd :bd<CR>
-nmap <leader>n :NERDTreeToggle<CR>
+nmap <leader>n :NERDTree<CR>
 nmap <leader>c :!
 
 " dont yank pasted over text
@@ -59,8 +60,6 @@ set directory=/tmp//
 
 " dont overwrite symlinks when saving
 set backupcopy=auto
-
-" filetype specific settings
 
 " YAML
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
