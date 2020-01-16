@@ -8,3 +8,5 @@ alias centos='docker run -i -t --rm=true centos /bin/bash'
 
 alias k='kubectl'
 alias kc='source <(kubectl completion zsh)'
+
+alias grep='grep --colour'

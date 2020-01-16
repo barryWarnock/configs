@@ -2,3 +2,7 @@
     flog=!git log --pretty=oneline | fzf
     frebase=!git rebase -i $(git flog | awk '{print $1}')~1
     pwl=push --force-with-lease
+    resolve=!git fetch --all && git rebase origin/master
+    fo=!git checkout `git branch | fzf`
+    smash=!git commit -m "!fixup" && git rebase -i HEAD~2
+    nush=!git push --set-upstream origin `git rev-parse --abbrev-ref HEAD`  

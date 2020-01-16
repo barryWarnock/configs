@@ -30,7 +30,7 @@ nmap <leader>fe :edit ~/.vimrc<CR>
 nmap <leader>fr :source ~/.vimrc<CR>
 nmap <leader>F :edit 
 nmap <leader>bb :Buffers<CR>
-nmap <leader>bs :edit /tmp/scratch
+nmap <leader>bs :edit /tmp/scratch<CR>
 nmap <leader>bd :bd<CR>
 nmap <leader>n :NERDTree<CR>
 nmap <leader>c :!

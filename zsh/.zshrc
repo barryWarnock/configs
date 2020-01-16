@@ -24,6 +24,16 @@ function zle-line-init zle-keymap-select {
    zle reset-prompt
 }
 
+#pass through commands to git if they are valid gommands
+function command_not_found_handler() {
+    if git help $1 > /dev/null 2>&1; then
+        git $@
+    else
+        echo "command not found: $1"
+        return 127
+    fi
+}
+
 zle -N zle-line-init
 zle -N zle-keymap-select
 
