@@ -28,9 +28,10 @@ nmap <leader><SPACE> :
 nmap <leader>fs :w<CR>
 nmap <leader>fe :edit ~/.vimrc<CR>
 nmap <leader>fr :source ~/.vimrc<CR>
-nmap <leader>F :edit 
+nmap <leader>e :edit 
+nmap <leader>F :Files<CR>
+nmap <leader>G :GFiles<CR>
 nmap <leader>bb :Buffers<CR>
-nmap <leader>bs :edit /tmp/scratch<CR>
 nmap <leader>bd :bd<CR>
 nmap <leader>n :NERDTree<CR>
 nmap <leader>c :!
@@ -54,15 +55,36 @@ set undodir=$HOME/.vim/undo
 set undolevels=1000
 set undoreload=10000
 
+" hit j and k at the same time to go back to normal mode
+inoremap jk <Esc>
+inoremap kj <Esc>
+" temp binding to train myself to use the above
+inoremap <C-[> <C-o>:echoerr "use the new binding Fool!"<CR>
+
 " Don't dirty up directories with files I don't need to persist
 set backupdir=/tmp//
 set directory=/tmp//
+
+" Save file when leaving buffer
+:autocmd FocusLost * silent! :wa
 
 " dont overwrite symlinks when saving
 set backupcopy=auto
 
 " YAML
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+
+" Local configs
+if !empty(glob("~/.vim/localrc"))
+    so ~/.vim/localrc
+endif
+
+" VimWiki
+let g:vimwiki_listsyms = ' oOX'
+nmap <leader>ta :Ack! '\[[ oOX]] ' ~/vimwiki<CR>
+nmap <leader>tt :Ack! '\[[oO ]*] ' ~/vimwiki<CR>
+nmap <leader>wa :Ack! '\[\[.*?]]' ~/vimwiki<CR>
+nmap <leader>fw :Files ~/vimwiki<CR>
 
 " Plugins "
 

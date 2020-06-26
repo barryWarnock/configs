@@ -9,6 +9,8 @@ Plug 'vim-scripts/SyntaxRange'
 Plug 'vim-airline/vim-airline'
 Plug 'kovisoft/slimv'
 Plug 'easymotion/vim-easymotion'
+Plug 'vimwiki/vimwiki'
+Plug 'mileszs/ack.vim'
 
 Plug 'nanotech/jellybeans.vim'
 

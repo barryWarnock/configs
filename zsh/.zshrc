@@ -7,9 +7,9 @@ include () {
 include $HOME/.zsh/alias.zsh
 include $HOME/.zsh/env.zsh
 include $HOME/.zsh/zsh_opts.zsh
-include $HOME/.local.zsh
 
 bindkey -v
+bindkey -M viins 'jk' vi-cmd-mode
 
 bindkey '^P' up-history
 bindkey '^N' down-history
@@ -39,4 +39,17 @@ zle -N zle-keymap-select
 
 export KEYTIMEOUT=1
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if [ -f /home/barry.warnock/.ansible/env.sh ]; then
+    . /home/barry.warnock/.ansible/env.sh
+    # To disable ansible, comment out, but do not delete the following:
+    activate_ansible
+fi
+
+#Set terminal window name to current dir
+function chpwd() {
+    print -Pn "\e]2;%~\a"
+}
+
+include $HOME/.local.zsh
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
