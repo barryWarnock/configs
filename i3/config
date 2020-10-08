@@ -68,6 +68,9 @@ bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 bindsym $mod+Shift+h move left
 
+#cycle focuses workspace through monitors
+bindsym $mod+m move workspace to output right
+
 # split in horizontal orientation
 bindsym $mod+slash split h
 
@@ -85,7 +88,8 @@ bindsym $mod+w layout tabbed
 bindsym $mod+Shift+space floating toggle
 
 bindsym $mod+minus move scratchpad
-bindsym $mod+space scratchpad show
+bindsym $mod+space [instance="gvim"] scratchpad show
+bindsym $mod+backslash [instance="Alacritty"] scratchpad show
 
 # focus the parent container
 bindsym $mod+a focus parent

@@ -7,15 +7,23 @@ autocmd BufEnter * silent! lcd %:p:h
 
 " no decorations in gui mode
 set guioptions=pi "scrollbar
+" use Jetbrains Mono at a size appropriate for a 4k monitor
+set guifont=JetBrains\ Mono\ 14
 
 " show line numbers
 set number
 
+" word wrap at word breaks
+set linebreak
+
 " incremental search
 set incsearch
 
-" 4 space tabs
-set tabstop=4 shiftwidth=4 expandtab
+" spellcheck toggle with f5
+:noremap <F5> :setlocal spell! spelllang=en_ca<CR>
+
+" 2 space tabs
+set tabstop=2 shiftwidth=2 noexpandtab
 
 " highlight line when in insert
 autocmd InsertEnter * set cul
@@ -39,6 +47,9 @@ nmap <leader>c :!
 " dont yank pasted over text
 vnoremap p "_c<esc>p
 
+" ; to open command history
+nmap ; q:
+
 " easier split movement / bindings
 set splitbelow
 set splitright
@@ -58,6 +69,7 @@ set undoreload=10000
 " hit j and k at the same time to go back to normal mode
 inoremap jk <Esc>
 inoremap kj <Esc>
+
 " temp binding to train myself to use the above
 inoremap <C-[> <C-o>:echoerr "use the new binding Fool!"<CR>
 
@@ -71,9 +83,6 @@ set directory=/tmp//
 " dont overwrite symlinks when saving
 set backupcopy=auto
 
-" YAML
-autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-
 " Local configs
 if !empty(glob("~/.vim/localrc"))
     so ~/.vim/localrc
@@ -81,10 +90,18 @@ endif
 
 " VimWiki
 let g:vimwiki_listsyms = ' oOX'
+" list all todos
 nmap <leader>ta :Ack! '\[[ oOX]] ' ~/vimwiki<CR>
+" list in progress todos
 nmap <leader>tt :Ack! '\[[oO ]*] ' ~/vimwiki<CR>
-nmap <leader>wa :Ack! '\[\[.*?]]' ~/vimwiki<CR>
+" list all wiki files in a searchable way
 nmap <leader>fw :Files ~/vimwiki<CR>
+" open a general purpose todos buffer
+nmap <leader>ft :e ~/vimwiki/ToDos.wiki<CR>
+
+" when on the beginning of a line on the Stories page create the CL
+" description on that page
+nmap <leader>wi /W-vee"wyW"ty$b"tPakjo@jk"wpa@@rev _@jk
 
 " Plugins "
 

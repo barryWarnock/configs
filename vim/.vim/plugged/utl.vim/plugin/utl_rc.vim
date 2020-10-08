@@ -62,7 +62,6 @@ let utl__file_rc =    expand("<sfile>")	    " Do not remove this line
 	    "let g:utl_cfg_hdl_scm_http_system = 'silent !start C:\Program Files\Mozilla Firefox\firefox.exe %u#%f'
 
 	elseif has("unix")
-	    let g:utl_cfg_hdl_scm_http_system='exe "silent !google-chrome %u" | redraw!'
 
 	    " TODO: Standard Handler for Unixes that can be shipped
 	    "	    preconfigured with next utl.vim release

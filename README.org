@@ -1,4 +1,2 @@
 * Barry's Dotfiles
 A constant work in progress
-
-hopefully automatically synced each night

@@ -37,7 +37,7 @@ function command_not_found_handler() {
 zle -N zle-line-init
 zle -N zle-keymap-select
 
-export KEYTIMEOUT=1
+export KEYTIMEOUT=10
 
 if [ -f /home/barry.warnock/.ansible/env.sh ]; then
     . /home/barry.warnock/.ansible/env.sh
@@ -53,3 +53,5 @@ function chpwd() {
 include $HOME/.local.zsh
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
