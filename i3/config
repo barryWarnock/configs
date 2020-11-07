@@ -90,6 +90,7 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+minus move scratchpad
 bindsym $mod+space [instance="gvim"] scratchpad show
 bindsym $mod+backslash [instance="Alacritty"] scratchpad show
+for_window [floating] move position center
 
 # focus the parent container
 bindsym $mod+a focus parent
