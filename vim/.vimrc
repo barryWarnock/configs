@@ -102,6 +102,8 @@ nmap <leader>ft :e ~/vimwiki/ToDos.wiki<CR>
 " when on the beginning of a line on the Stories page create the CL
 " description on that page
 nmap <leader>wi /W-vee"wyW"ty$b"tPakjo@jk"wpa@@rev _@jk
+" when on a WI page, copy the work #
+nmap <leader>wc gg/@W-.*@<CR>lveey
 
 " Plugins "
 
