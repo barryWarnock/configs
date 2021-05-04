@@ -34,9 +34,7 @@ mouse_warping none
 
 # start programs
 # start a terminal
-bindsym $mod+Return exec alacritty
-# start chrome
-bindsym $mod+g exec google-chrome
+bindsym $mod+Return exec gnome-terminal
 # lock screen
 bindsym $mod+o exec i3lock -c 606060
 # open vim
@@ -63,13 +61,10 @@ bindsym $mod+l focus right
 bindsym $mod+h focus left
 
 # move focused window
-bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
+bindsym $mod+Shift+j move down
 bindsym $mod+Shift+l move right
 bindsym $mod+Shift+h move left
-
-#cycle focuses workspace through monitors
-bindsym $mod+m move workspace to output right
 
 # split in horizontal orientation
 bindsym $mod+slash split h
@@ -89,14 +84,23 @@ bindsym $mod+Shift+space floating toggle
 
 bindsym $mod+minus move scratchpad
 bindsym $mod+space [instance="gvim"] scratchpad show
-bindsym $mod+backslash [instance="Alacritty"] scratchpad show
-for_window [floating] move position center
+bindsym $mod+backslash [instance="gnome-terminal"] scratchpad show
+bindsym $mod+Shift+m [instance="spotify"] scratchpad show
 
 # focus the parent container
 bindsym $mod+a focus parent
 
 # focus the child container
 bindsym $mod+Shift+a focus child
+
+#vim like mark/goto
+# read 1 character and mark the current window with this character
+bindsym $mod+m exec i3-input -F 'mark %s' -l 1 -P 'Mark: '
+# read 1 character and go to the window with the character (~ = grave)
+bindsym $mod+grave exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: '
+#remove a mark
+bindsym $mod+Shift+grave unmark
+
 
 # switch to workspace
 bindsym $mod+1 workspace 1
