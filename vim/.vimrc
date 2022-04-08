@@ -8,7 +8,7 @@ autocmd BufEnter * silent! lcd %:p:h
 " no decorations in gui mode
 set guioptions=pi "scrollbar
 " use Jetbrains Mono at a size appropriate for a 4k monitor
-set guifont=JetBrains\ Mono\ 14
+set guifont=JetBrains\ Mono\ 15
 
 " show line numbers
 set number
@@ -23,7 +23,7 @@ set incsearch
 :noremap <F5> :setlocal spell! spelllang=en_ca<CR>
 
 " 2 space tabs
-set tabstop=2 shiftwidth=2 noexpandtab
+set tabstop=2 shiftwidth=2 expandtab
 
 " highlight line when in insert
 autocmd InsertEnter * set cul
@@ -70,8 +70,9 @@ set undoreload=10000
 inoremap jk <Esc>
 inoremap kj <Esc>
 
-" temp binding to train myself to use the above
-inoremap <C-[> <C-o>:echoerr "use the new binding Fool!"<CR>
+" case insensitive search unless there's an uppercase char
+set ignorecase
+set smartcase
 
 " Don't dirty up directories with files I don't need to persist
 set backupdir=/tmp//
@@ -99,9 +100,23 @@ nmap <leader>fw :Files ~/vimwiki<CR>
 " open a general purpose todos buffer
 nmap <leader>ft :e ~/vimwiki/ToDos.wiki<CR>
 
-" when on the beginning of a line on the Stories page create the CL
-" description on that page
-nmap <leader>wi /W-vee"wyW"ty$b"tPakjo@jk"wpa@@rev _@jk
+" Search the contents of the vimwiki
+function GrepWiki(pattern) abort
+	" perform a case insensitive search
+	execute "vim /\\c". a:pattern ."/ ~/vimwiki/**/*.wiki"
+	:normal! zz
+	":copen
+endfunction
+command! -nargs=1 GrepWiki :call GrepWiki(<f-args>)
+nmap <leader>wg :GrepWiki 
+
+" Open and quit the Quicklist
+nmap <leader>qo :copen<cr>
+nmap <leader>qq :ccl<cr>
+
+" when on a line on the Stories page create the CL
+" description for that WI
+nmap <leader>wi 0/W-vee"wyW"ty$b"tPakjo@jk"wpa@@rev none@jk
 " when on a WI page, copy the work #
 nmap <leader>wc gg/@W-.*@<CR>lveey
 

@@ -6,6 +6,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'vim-airline/vim-airline'
 Plug 'vimwiki/vimwiki'
 Plug 'mileszs/ack.vim'
+Plug 'glench/vim-jinja2-syntax'
 
 Plug 'nanotech/jellybeans.vim'
 

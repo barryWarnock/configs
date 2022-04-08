@@ -6,3 +6,14 @@
     fo=!git checkout `git branch | fzf`
     smash=!git commit -m "!fixup" && git rebase -i HEAD~2
     nush=!git push --set-upstream origin `git rev-parse --abbrev-ref HEAD`  
+    sfcd=!git checkout master && git fetch sfcd master && git rebase sfcd/master
+[user]
+	name = barry-warnock
+	email = barry.warnock@salesforce.com
+	signingkey = D94EAFFA2223DB2D
+[commit]
+	gpgsign = true
+[push]
+	gpgsign = if-asked
+[url "ssh://git@git.soma.salesforce.com"]
+	insteadOf = https://git.soma.salesforce.com
