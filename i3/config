@@ -42,7 +42,9 @@ bindsym $mod+Return exec gnome-terminal
 # lock screen
 bindsym $mod+o exec i3lock -c 606060
 # open vim
-bindsym $mod+e exec gvim
+# bindsym $mod+e exec gvim
+# open emacs
+bindsym $mod+e exec emacs
 
 # move workspace
 bindsym $mod+Control+h move workspace to output left
@@ -89,7 +91,7 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+i sticky toggle
 
 bindsym $mod+minus move scratchpad
-bindsym $mod+space [instance="gvim"] scratchpad show
+bindsym $mod+space [instance="emacs"] scratchpad show
 bindsym $mod+backslash [instance="gnome-terminal"] scratchpad show
 bindsym $mod+Shift+m [instance="spotify"] scratchpad show
 

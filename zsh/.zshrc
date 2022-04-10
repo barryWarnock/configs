@@ -9,7 +9,7 @@ include $HOME/.zsh/env.zsh
 include $HOME/.zsh/zsh_opts.zsh
 
 bindkey -v
-bindkey -M viins 'jk' vi-cmd-mode
+bindkey -M viins 'kj' vi-cmd-mode
 
 bindkey '^P' up-history
 bindkey '^N' down-history
