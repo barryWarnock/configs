@@ -14,6 +14,7 @@
 ;; emacs is a bit overzealous when it comes to highlighting
 (setq-default evil-ex-search-highlight-all nil)
 (setq-default vc-follow-symlinks t)
+(setq-default nrepl-use-ssh-fallback-for-remote-hosts t)
 
 ; set keybinds
 ;; close all other windows (window only)
