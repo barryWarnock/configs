@@ -9,7 +9,7 @@
   "if we're inside a WI TODO yank it's description in the format expected for a git commit"
   (interactive)
   (let ((org-props (org-entry-properties)))
-    (letf ((acdr
+    (cl-flet ((acdr
             (lambda (mapping key)
               (cdr (assoc key mapping)))))
       (kill-new (apply 'format "%s\n@%s@\n%s"
@@ -23,3 +23,7 @@
               '(("w" "WI" entry (file+headline "~/org/work.org" "Stories")
                  "* TODO %^{name}%^{id}p%^{link}p\n%?")))
 
+;; customize org-pomodoro
+(setq org-pomodoro-finished-sound nil)
+(add-hook 'org-pomodoro-finished-hook 'spotify-pause)
+(spacemacs/set-leader-keys-for-major-mode 'org-mode "p" 'org-pomodoro)
