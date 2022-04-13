@@ -1,12 +1,12 @@
-; start as a daemon
+                                        ; start as a daemon
 (load "server")
 (unless server-process (server-start))
 
-; set global modes
+                                        ; set global modes
 ;; show line numbers
 (global-linum-mode)
 
-; set vars
+                                        ; set vars
 ;; escape with kj
 (setq-default evil-escape-key-sequence "kj")
 ;; don't yank replaced text when pasting in visual mode
@@ -16,7 +16,7 @@
 (setq-default vc-follow-symlinks t)
 (setq-default nrepl-use-ssh-fallback-for-remote-hosts t)
 
-; set keybinds
+                                        ; set keybinds
 ;; close all other windows (window only)
 (spacemacs/set-leader-keys "wo" 'spacemacs/toggle-maximize-buffer)
 ;; spotify bindings
@@ -27,5 +27,10 @@
 (spacemacs/set-leader-keys "sc" 'spotify-current)
 (spacemacs/set-leader-keys "sn" 'spotify-next)
 
-; org configs
+;; org configs
 (load "~/.emacs/org-configs")
+
+;; local configs (if they exist)
+(let ((local-config "~/.local-config"))
+  (if (file-exists-p (concat local-config ".el"))
+      (load local-config)))
