@@ -1,0 +1,16 @@
+[:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
+audible-bell=false
+background-color='rgb(29,31,33)'
+bold-color-same-as-fg=true
+bold-is-bright=false
+cursor-colors-set=false
+cursor-shape='block'
+custom-command='zsh'
+default-size-columns=80
+font='JetBrains Mono NL Bold 19'
+foreground-color='rgb(197,200,198)'
+login-shell=true
+palette=['rgb(29,31,33)', 'rgb(204,102,102)', 'rgb(181,189,104)', 'rgb(240,198,116)', 'rgb(129,162,190)', 'rgb(178,148,187)', 'rgb(138,190,183)', 'rgb(197,200,198)', 'rgb(150,152,150)', 'rgb(235,58,34)', 'rgb(40,42,46)', 'rgb(55,59,65)', 'rgb(180,183,180)', 'rgb(224,224,224)', 'rgb(163,104,90)', 'rgb(255,255,255)']
+use-custom-command=true
+use-system-font=false
+use-theme-colors=false
