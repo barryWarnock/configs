@@ -44,7 +44,7 @@ bindsym $mod+o exec i3lock -c 606060
 # open vim
 # bindsym $mod+e exec gvim
 # open emacs
-bindsym $mod+e exec emacsclient -c
+bindsym $mod+e exec emacs
 
 # move workspace
 bindsym $mod+Control+h move workspace to output left
