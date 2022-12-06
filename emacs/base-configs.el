@@ -28,6 +28,8 @@
 ;; :q muscle memory keeps killing my windows
 (evil-ex-define-cmd "q[uit]" 'evil-write)
 (evil-ex-define-cmd "x" 'evil-write)
+;; SPC-fd to open dired
+(spacemacs/set-leader-keys "fd" (lambda () (interactive) (dired default-directory)))
 ;; close all other windows (window only)
 (spacemacs/set-leader-keys "wo" 'spacemacs/toggle-maximize-buffer)
 ;; spotify bindings
@@ -50,6 +52,8 @@
 (spacemacs/set-leader-keys "pb" 'project-switch-to-buffer)
 ;;; kill all project buffers
 (spacemacs/set-leader-keys "pk" 'project-kill-buffers)
+;;; find in project
+(spacemacs/set-leader-keys "pg" 'project-find-regexp)
 
 ; project settings
 (setq project-switch-commands (list '(project-find-file "Find file")

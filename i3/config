@@ -30,7 +30,7 @@ font pango:monospace 8
 floating_modifier $mod
 
 #don't warp mouse to center of workspace when switching outputs
-mouse_warping none
+mouse_warping output
 
 #no ugly title bars
 default_border pixel
@@ -149,3 +149,19 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 bar {
         status_command i3status
 }
+
+# force a source of .xinitrc
+exec_always ~/.xinitrc
+# I want workspace 1 on the external monitor
+workspace 1 output HDMI-3 primary
+workspace 2 output HDMI-3 primary
+workspace 3 output HDMI-3 primary
+# Start some basic programs at the beginning of every session
+exec vpnui
+exec google-chrome
+exec slack
+exec gnome-terminal
+exec emacs
+exec spotify
+exec idea
+exec nm-applet

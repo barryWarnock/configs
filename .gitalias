@@ -8,9 +8,9 @@
     nush=!git push --set-upstream origin `git rev-parse --abbrev-ref HEAD`  
     sfcd=!git checkout master && git fetch sfcd master && git rebase sfcd/master
 [user]
-	name = barry-warnock
+	name = Barry Simunovic
 	email = barry.warnock@salesforce.com
-	signingkey = D94EAFFA2223DB2D
+	signingkey = 23E3B0F8B08BFBF2
 [commit]
 	gpgsign = true
 [push]

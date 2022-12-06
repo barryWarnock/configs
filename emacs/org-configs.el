@@ -9,7 +9,7 @@
 ;; prettify
 (setq org-superstar-leading-bullet ?\s)
 (setq org-todo-keywords
-      '((sequence "NEW" "IN-PROGRESS" "|" "DONE")))
+      '((sequence "NEW" "IN-PROGRESS" "WAITING" "|" "DONE")))
 
 ;; populate a format string with a given list of org props
 (defun org-format-with-props (fstring prop-list)
@@ -40,6 +40,9 @@
                  "* NEW %^{name}%^{id}p%^{link}p\n%?")
                 ("n" "Quick Note" item (file org-default-notes-file)
                  " %?")))
+
+;; save target files after refile
+(add-hook 'org-after-refile-insert-hook 'projectile-save-project-buffers)
 
 ;; open the default-notes-file
 (defun switch-to-org-notes ()
