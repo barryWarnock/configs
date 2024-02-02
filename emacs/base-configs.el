@@ -1,14 +1,8 @@
                                         ; set global modes
-;; show line numbers
-(global-linum-mode)
 ;; word wrap
 (global-visual-line-mode)
-;; emacs develepment environment (for non VC project support)
-(global-ede-mode t)
 
 ; set vars
-;; escape with kj
-(setq-default evil-escape-key-sequence "kj")
 ;; don't yank replaced text when pasting in visual mode
 (setq-default evil-kill-on-visual-paste nil)
 ;; emacs is a bit overzealous when it comes to highlighting

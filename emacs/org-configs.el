@@ -1,6 +1,6 @@
                                         ; Org Mode specific configs
 ;; set file locations
-(setq-default org-agenda-files '("~/org"))
+(setq-default org-agenda-files '("~/org" "~/workorg"))
 (setq org-refile-targets
       '((nil :maxlevel . 3)
         (org-agenda-files :maxlevel . 1)))
@@ -9,7 +9,7 @@
 ;; prettify
 (setq org-superstar-leading-bullet ?\s)
 (setq org-todo-keywords
-      '((sequence "NEW" "IN-PROGRESS" "WAITING" "|" "DONE")))
+      '((sequence "TODO" "IN-PROGRESS" "|" "WAITING" "DONE")))
 
 ;; populate a format string with a given list of org props
 (defun org-format-with-props (fstring prop-list)
