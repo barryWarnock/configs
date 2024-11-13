@@ -1,4 +1,7 @@
                                         ; set global modes
+;; midnight mode
+(require 'midnight)
+(midnight-delay-set `midnight-delay "5:00am")
 ;; word wrap
 (global-visual-line-mode)
 

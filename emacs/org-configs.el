@@ -9,40 +9,52 @@
 ;; prettify
 (setq org-superstar-leading-bullet ?\s)
 (setq org-todo-keywords
-      '((sequence "TODO" "IN-PROGRESS" "|" "WAITING" "DONE")))
+      '((sequence "TODO(t!)" "IN-PROGRESS(p!)" "|" "WAITING(w!)" "DONE(d!)")))
+
+;; log todo timestamps to a shelf
+(setq-default org-log-into-drawer "timestamps")
+(setq-default org-log-done nil)
 
 ;; populate a format string with a given list of org props
 (defun org-format-with-props (fstring prop-list)
   (let ((org-props (org-entry-properties)))
-      (apply 'format fstring
-             (mapcar
-              (lambda (key)
-                (cdr (assoc key org-props)))
-              prop-list))))
+    (apply 'format fstring
+           (mapcar
+            (lambda (key)
+              (cdr (assoc key org-props)))
+            prop-list))))
 
 ;; custom function to pull a git commit message from a WI
 (defun org-yank-wi-desc ()
-  "if we're inside a WI yank it's description in the format expected for a git commit"
+  "if we're inside a WI yank its description in the format expected for a git commit"
   (interactive)
-  (kill-new (org-format-with-props "%s\n\n@%s@\n%s" '("ITEM" "ID" "LINK"))))
+  (kill-new (org-format-with-props "%s\n\nissue: %s\nteam pager handle: shop-pay-commerce-component\n\nrollback instructions:" '("ITEM" "LINK"))))
 (spacemacs/set-leader-keys-for-major-mode 'org-mode "w" 'org-yank-wi-desc)
-
-;; custom function to pull a git commit message from a WI
 (defun org-yank-wi-link ()
-  "if we're inside a WI yank a slack formatted link to the WI"
+  "if we're inside a WI yank its link"
   (interactive)
-  (kill-new (org-format-with-props "[%s](%s)" '("ID" "LINK"))))
+  (kill-new (org-format-with-props "%s" '("LINK"))))
 (spacemacs/set-leader-keys-for-major-mode 'org-mode "l" 'org-yank-wi-link)
 
 ;; set capture templates
 (setq org-capture-templates
-              '(("w" "WI" entry (file "~/org/stories.org")
-                 "* NEW %^{name}%^{id}p%^{link}p\n%?")
+              '(("w" "WI" entry (file "~/workorg/issues.org")
+                 "* TODO %^{name}%^{link}p\n%?")
                 ("n" "Quick Note" item (file org-default-notes-file)
                  " %?")))
+(setq-default org-capture-bookmark nil)
 
 ;; save target files after refile
 (add-hook 'org-after-refile-insert-hook 'projectile-save-project-buffers)
+
+;; archive to a sub heading
+(defun set-archive-heading ()
+  "set the default archive heading to include the current month and year"
+  (interactive)
+  (setq-default org-archive-location (concat "%s_archive::* " (format-time-string "%B %Y"))))
+(set-archive-heading)
+(add-hook `midnight-hook `set-archive-heading)
+
 
 ;; open the default-notes-file
 (defun switch-to-org-notes ()
@@ -68,3 +80,9 @@
 (add-hook 'org-pomodoro-finished-hook 'switch-to-org-notes)
 
 (spacemacs/set-leader-keys-for-major-mode 'org-mode "p" 'org-pomodoro)
+
+;; babel configs
+;; active Babel languages
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((shell . t)))
