@@ -6,16 +6,28 @@ function git_branch_name()
     then
         :
     else
-        echo ' ('$branch')'
+        echo $branch
     fi
+}
+
+function git_path_or_full()
+{
+    if git rev-parse --is-inside-work-tree &> /dev/null
+    then
+        repo_name=$(basename `git rev-parse --show-toplevel`)
+        sub_path=`git rev-parse --show-prefix`
+        echo "%F{red}"$repo_name"%F{white}"@"%F{cyan}"`git_branch_name` "%F{blue}"$repo_name/$sub_path
+    else
+        echo "%F{blue}"`pwd`
+    fi
+    
 }
 
 # Enable substitution in the prompt.
 setopt prompt_subst
 
-prompt='%2/ $(git_branch_name) > '
 #prompt
-export PS1='%B%F{green}[%D{%I:%M}] %F{blue}%4d%F{cyan}$(git_branch_name)%f: %b'
+export PS1='%B%F{green}[%D{%I:%M}] $(git_path_or_full)%f: %b'
 
 #history variables
 HISTFILE=$HOME/histfile
