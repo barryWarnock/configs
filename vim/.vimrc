@@ -66,10 +66,6 @@ set undodir=$HOME/.vim/undo
 set undolevels=1000
 set undoreload=10000
 
-" hit j and k at the same time to go back to normal mode
-inoremap jk <Esc>
-inoremap kj <Esc>
-
 " case insensitive search unless there's an uppercase char
 set ignorecase
 set smartcase
@@ -83,32 +79,12 @@ set directory=/tmp//
 
 " dont overwrite symlinks when saving
 set backupcopy=auto
+under_score_case
 
 " Local configs
 if !empty(glob("~/.vim/localrc"))
     so ~/.vim/localrc
 endif
-
-" VimWiki
-let g:vimwiki_listsyms = ' oOX'
-" list all todos
-nmap <leader>ta :Ack! '\[[ oOX]] ' ~/vimwiki<CR>
-" list in progress todos
-nmap <leader>tt :Ack! '\[[oO ]*] ' ~/vimwiki<CR>
-" list all wiki files in a searchable way
-nmap <leader>fw :Files ~/vimwiki<CR>
-" open a general purpose todos buffer
-nmap <leader>ft :e ~/vimwiki/ToDos.wiki<CR>
-
-" Search the contents of the vimwiki
-function GrepWiki(pattern) abort
-	" perform a case insensitive search
-	execute "vim /\\c". a:pattern ."/ ~/vimwiki/**/*.wiki"
-	:normal! zz
-	":copen
-endfunction
-command! -nargs=1 GrepWiki :call GrepWiki(<f-args>)
-nmap <leader>wg :GrepWiki 
 
 " Open and quit the Quicklist
 nmap <leader>qo :copen<cr>

@@ -25,16 +25,12 @@
 ;; :q muscle memory keeps killing my windows
 (evil-ex-define-cmd "q[uit]" 'evil-write)
 (evil-ex-define-cmd "x" 'evil-write)
+;; SPC-SPC stopped working, fix it
+(spacemacs/set-leader-keys "SPC" `spacemacs/helm-M-x-fuzzy-matching)
 ;; SPC-fd to open dired
 (spacemacs/set-leader-keys "fd" (lambda () (interactive) (dired default-directory)))
 ;; close all other windows (window only)
 (spacemacs/set-leader-keys "wo" 'spacemacs/toggle-maximize-buffer)
-;; spotify bindings
-;;; clearing the s prefix to remove all the existing search bindings
-(spacemacs/declare-prefix "as" "Spotify")
-(spacemacs/set-leader-keys "asp" 'spotify-playpause)
-(spacemacs/set-leader-keys "asc" 'spotify-current)
-(spacemacs/set-leader-keys "asn" 'spotify-next)
 ;; project bindings
 ;;; clearing the p prefix to remove all the existing projectile
 (spacemacs/set-leader-keys "p" nil)
@@ -58,6 +54,9 @@
                                     '(project-switch-to-buffer "Open buffer")
                                     '(project-find-regexp "Find regexp")
                                     '(project-shell "shell" "s")))
+
+; avy settings
+(spacemacs/set-leader-keys "jf" 'avy-goto-char)
 
 ; org configs
 (with-eval-after-load 'org
