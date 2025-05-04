@@ -3,7 +3,6 @@ alias ls='ls --color=auto'
 alias ll='ls -l'
 alias la='ls -la'
 
-alias emacs='emacsclient -t'
 alias vi='vim'
 
 alias kb='setxkbmap -option ctrl:nocaps'

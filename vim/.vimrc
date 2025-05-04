@@ -79,7 +79,6 @@ set directory=/tmp//
 
 " dont overwrite symlinks when saving
 set backupcopy=auto
-under_score_case
 
 " Local configs
 if !empty(glob("~/.vim/localrc"))
