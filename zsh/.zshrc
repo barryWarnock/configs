@@ -64,4 +64,4 @@ export PATH="$HOME/bin:$PATH"
 
 [[ -x /opt/homebrew/bin/brew ]] && eval $(/opt/homebrew/bin/brew shellenv)
 
-. "$HOME/.local/bin/env"
+[ -f ~/.local/bin/env ] && . "$HOME/.local/bin/env"

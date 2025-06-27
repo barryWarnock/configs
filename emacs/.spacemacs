@@ -36,7 +36,6 @@ This function should only modify configuration layer settings."
    '(typescript
      ruby
      rust
-     ansible
      (auto-completion :disabled-for org text)
      clojure
      emacs-lisp
@@ -50,12 +49,9 @@ This function should only modify configuration layer settings."
      org
      python
      spacemacs-editing
-     spotify
      terraform
      treemacs
      vimscript
-     (llm-client :variables
-                 llm-client-enable-gptel t)
      )
 
 
@@ -73,6 +69,7 @@ This function should only modify configuration layer settings."
                                       chruby
                                       minuet
                                       with-simulated-input
+                                      zoom-window
                                       )
 
    ;; A list of packages that cannot be updated.
@@ -585,7 +582,7 @@ This function is called at the very end of Spacemacs initialization."
    '(ede-project-directories '("/home/barry.warnock/org"))
    '(evil-want-Y-yank-to-eol nil)
    '(git-gutter:update-interval 5)
-   '(helm-completion-style 'helm)
+   '(helm-completion-style 'helm t)
    '(hl-todo-keyword-faces
      '(("TODO" . "#dc752f") ("NEXT" . "#dc752f") ("THEM" . "#2d9574")
        ("PROG" . "#4f97d7") ("OKAY" . "#4f97d7") ("DONT" . "#f2241f")
@@ -595,6 +592,10 @@ This function is called at the very end of Spacemacs initialization."
    '(org-fontify-done-headline nil)
    '(org-fontify-todo-headline nil)
    '(org-hide-emphasis-markers t)
+   '(org-link-frame-setup
+     '((vm . vm-visit-folder-other-frame)
+       (vm-imap . vm-visit-imap-folder-other-frame) (gnus . org-gnus-no-new-news)
+       (file . find-file) (wl . wl-other-frame)))
    '(package-selected-packages
      '(ac-ispell ace-jump-helm-line ace-link add-node-modules-path aggressive-indent
                  aidermacs alert anaconda-mode ansible ansible-doc anzu async
@@ -652,12 +653,13 @@ This function is called at the very end of Spacemacs initialization."
                  vi-tilde-fringe vimrc-mode vmd-mode volatile-highlights
                  web-beautify web-mode which-key winum with-editor
                  with-simulated-input writeroom-mode ws-butler xcscope xref
-                 xterm-color yaml yaml-mode yapfify yasnippet yasnippet-snippets))
+                 xterm-color yaml yaml-mode yapfify yasnippet yasnippet-snippets
+                 zoom-window))
    '(pdf-view-midnight-colors '("#b2b2b2" . "#292b2e")))
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
    ;; If you edit it by hand, you could mess it up, so be careful.
    ;; Your init file should contain only one such instance.
    ;; If there is more than one, they won't work right.
-   '(highlight-parentheses-highlight ((nil (:weight ultra-bold))) t))
+   )
   )

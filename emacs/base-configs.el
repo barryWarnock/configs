@@ -5,7 +5,7 @@
 ;; word wrap
 (global-visual-line-mode)
 ;; enable using emacsclient from the terminal
-(unless (server-running-p) (server-start))
+(server-mode 1)
 
                                         ; set vars
 ;; don't yank replaced text when pasting in visual mode
@@ -34,7 +34,7 @@
 (setq dired-dwim-target t)
 
 ;; close all other windows (window only)
-(spacemacs/set-leader-keys "wo" 'spacemacs/toggle-maximize-buffer)
+(spacemacs/set-leader-keys "wo" 'zoom-window-zoom)
 ;; bookmark bindings
 (spacemacs/set-leader-keys "rb" 'bookmark-set)
 (spacemacs/set-leader-keys "rj" 'bookmark-jump)
@@ -53,9 +53,9 @@
 
 (defun language-rg-filter ()
   (case major-mode
-    ('ruby-mode "-g*.rb")
-    ('rustic-mode "-g*.rs")
-    (t ""))
+        ('ruby-mode "-g*.rb")
+        ('rustic-mode "-g*.rs")
+        (t ""))
   )
 (setq helm-ag-base-command "rg --smart-case --no-heading --color=never --line-number")
 (defun project-look ()
@@ -104,6 +104,8 @@
                                         ; ace config
 (setq aw-dispatch-always t)
 (spacemacs/set-leader-keys "ww" 'ace-window)
+                                        ; window config
+(setq compilation-scroll-output t)
 
                                         ; git gutter
 (custom-set-variables
