@@ -35,5 +35,5 @@ HISTSIZE=1000
 SAVEHIST=10000
 
 #editor
-export EDITOR="vim"
-export ALTERNATE_EDITOR=""
+export EDITOR="emacsclient -t"
+export ALTERNATE_EDITOR="vim"

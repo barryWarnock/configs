@@ -10,3 +10,5 @@ alias kb='setxkbmap -option ctrl:nocaps'
 alias grep='grep --colour'
 
 alias fim='vim `fzf`'
+
+alias ec='emacsclient -t'

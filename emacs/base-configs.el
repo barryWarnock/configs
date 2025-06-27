@@ -4,6 +4,8 @@
 (midnight-delay-set `midnight-delay "5:00am")
 ;; word wrap
 (global-visual-line-mode)
+;; enable using emacsclient from the terminal
+(unless (server-running-p) (server-start))
 
                                         ; set vars
 ;; don't yank replaced text when pasting in visual mode
@@ -43,16 +45,22 @@
 (spacemacs/set-leader-keys "p" nil)
 (spacemacs/declare-prefix "p" "Projects")
 
-;;; TODO: make this language agnostic
 (defun current-selection ()
   (interactive)
   (if (string-equal evil-state "visual")
       (buffer-substring evil-visual-beginning evil-visual-end)
     ""))
-(defun ruby-look ()
+
+(defun language-rg-filter ()
+  (case major-mode
+    ('ruby-mode "-g*.rb")
+    ('rustic-mode "-g*.rs")
+    (t ""))
+  )
+(setq helm-ag-base-command "rg --smart-case --no-heading --color=never --line-number")
+(defun project-look ()
   (interactive)
-  (let* ((helm-ag-base-command "rg --smart-case --no-heading --color=never --line-number"))
-    (helm-do-ag (projectile-project-root) nil (format "-g!*test* -g*.rb %s" (current-selection)))))
+  (helm-do-ag (projectile-project-root) nil (format "-g!*test* %s %s" (language-rg-filter) (current-selection))))
 
 (setq xref-search-program 'ripgrep)
 ;;; switch between open projects
@@ -66,7 +74,7 @@
 ;;; kill all project buffers
 (spacemacs/set-leader-keys "pk" 'project-kill-buffers)
 ;;; find in project
-(spacemacs/set-leader-keys "pg" 'ruby-look)
+(spacemacs/set-leader-keys "pg" 'project-look)
 ;;; open last search
 (spacemacs/set-leader-keys "pr" 'helm-resume)
 ;;; consider any directory with a dev.yml as a project
@@ -76,7 +84,7 @@
 (setq project-switch-commands (list '(project-find-file "Find file")
                                     '(project-find-dir "Find dir")
                                     '(project-switch-to-buffer "Open buffer")
-                                    '(ruby-look "Find regexp")))
+                                    '(project-look "Find regexp")))
 
 ;;; only use projectile as a backup to find a project
 (setq project-find-functions '(project-try-vc project-projectile))
@@ -102,8 +110,23 @@
  '(git-gutter:update-interval 5))
 (add-hook 'ruby-mode-hook 'git-gutter-mode)
 
-(start-process "echo" "*echo*" "echo" "somestring")
-                                        ; lsp config
+                                        ; code config
+;; jump to / from test
+(defun jump-to-test ()
+  (interactive)
+  (let* ((file-name-raw (file-name-nondirectory buffer-file-name))
+         (split-name (s-split "\\." file-name-raw))
+         (file-name (car split-name))
+         (file-ext (cadr split-name))
+         (file-is-test (s-contains-p "test" file-name))
+         (file-name-generic (car (s-split "\\(-\\|_\\|\\)test" file-name)))
+         (file-name-query (s-join "" (list file-name-generic (if (not file-is-test) "_test"))))
+         (query (format "%s.%s" file-name-query file-ext ))
+         (project-root (project-root (project-current t))))
+    (find-name-dired project-root query)))
+(spacemacs/set-leader-keys-for-major-mode 'ruby-mode "tg" 'jump-to-test)
+
+;; format ruby files on save
 (defun format-current-rb-file ()
   (interactive)
   (start-process "format ruby"
@@ -112,15 +135,36 @@
                  "style"
                  "-a"
                  (spacemacs/copy-file-path)))
+(spacemacs/set-leader-keys-for-major-mode 'ruby-mode "==" 'format-current-rb-file)
 
-(setq lsp-disabled-clients '(rubocop-ls typeprof-ls))
+(advice-add 'lsp-ruby-lsp--build-command :override
+            (lambda () '("shadowenv" "exec" "--" "ruby-lsp")))
+
+(setq lsp-sorbet--base-command '("shadowenv" "exec" "--" "srb" "tc" "--lsp" "--disable-watchman"))
+(advice-add 'lsp-sorbet--build-command :override
+            (lambda () (pcase (project-name (project-current))
+                         ("shopify" lsp-sorbet--base-command)
+                         (t (cl-concatenate 'list lsp-sorbet--base-command
+                                            (list "--dir" (file-relative-name (project-root (project-current)))))))))
+
+(setq lsp-disabled-clients '(rubocop-ls typeprof-ls ruby-ls ai-ls ruby-syntax-tree-ls helix-gpt))
+
+;; insert the current date
+(defun insert-current-date ()
+  (interactive)
+  (insert (string-trim (shell-command-to-string "date +'%Y-%m-%d %A'"))))
+(spacemacs/declare-prefix "oi" "Insert")
+(spacemacs/set-leader-keys "oid" 'insert-current-date)
 
                                         ; gpg config
 (setq epg-pinentry-mode 'loopback)
 (setq auth-sources
       '((:source "~/.authinfo.gpg")))
 
-                                        ; ai config
+                                        ; calc mode config
+(spacemacs/set-leader-keys "=" 'calc-dispatch)
+
+                                        ; require other configs
 (require 'org)
 (with-eval-after-load 'org
   (load "~/.emacs/org-configs")

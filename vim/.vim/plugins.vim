@@ -7,6 +7,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vimwiki/vimwiki'
 Plug 'mileszs/ack.vim'
 Plug 'glench/vim-jinja2-syntax'
+Plug 'axvr/org.vim'
 
 Plug 'nanotech/jellybeans.vim'
 

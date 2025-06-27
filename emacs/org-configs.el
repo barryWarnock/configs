@@ -38,7 +38,7 @@
 (defun org-yank-wi-desc ()
   "if we're inside a WI yank its description in the format expected for a git commit"
   (interactive)
-  (kill-new (org-format-with-props "%s\n\nissue: %s\nteam pager handle: shop-pay-commerce-component\n\nrollback instructions:" '("ITEM" "LINK"))))
+  (kill-new (org-format-with-props "%s\n\nissue: %s\n" '("ITEM" "LINK"))))
 (spacemacs/set-leader-keys-for-major-mode 'org-mode "w" 'org-yank-wi-desc)
 (spacemacs/declare-prefix "aoy" "Yank")
 (spacemacs/set-leader-keys "aoyw" 'org-yank-wi-desc)
@@ -92,24 +92,6 @@
   (interactive)
   (find-file org-default-notes-file))
 (spacemacs/set-leader-keys "aon" 'switch-to-org-notes)
-
-;; customize org-pomodoro
-(defun enable-system-notifications () (interactive) (shell-command "killall -SIGUSR2 dunst"))
-(defun disable-system-notifications () (interactive) (shell-command "killall -SIGUSR1 dunst"))
-
-;;; require org-pomodoro to force a load
-(require 'org-pomodoro)
-(setq org-pomodoro-finished-sound-p nil)
-(setq org-pomodoro-short-break-sound org-pomodoro-ticking-sound)
-(setq org-pomodoro-long-break-sound org-pomodoro-ticking-sound)
-
-(add-hook 'org-pomodoro-started-hook 'disable-system-notifications)
-(add-hook 'org-pomodoro-started-hook 'spotify-play)
-(add-hook 'org-pomodoro-finished-hook 'spotify-pause)
-(add-hook 'org-pomodoro-finished-hook 'enable-system-notifications)
-(add-hook 'org-pomodoro-finished-hook 'switch-to-org-notes)
-
-(spacemacs/set-leader-keys-for-major-mode 'org-mode "p" 'org-pomodoro)
 
 ;; babel configs
 ;; active Babel languages
