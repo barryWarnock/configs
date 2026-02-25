@@ -8,6 +8,7 @@ Plug 'vimwiki/vimwiki'
 Plug 'mileszs/ack.vim'
 Plug 'glench/vim-jinja2-syntax'
 Plug 'axvr/org.vim'
+Plug 'vuciv/golf'
 
 Plug 'nanotech/jellybeans.vim'
 

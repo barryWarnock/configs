@@ -1,4 +1,4 @@
-[[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+#[[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
 
 include () {
     [[ -f "$1" ]] && source "$1"
@@ -52,16 +52,10 @@ function chpwd() {
 
 include $HOME/.local.zsh
 
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 # ~/bin takes precedence
 export PATH="$HOME/bin:$PATH"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+include ~/.fzf.zsh
+include ~/.local/bin/env
 
-[ -f /opt/dev/dev.sh ] && source /opt/dev/dev.sh
-
-[[ -f /opt/dev/sh/chruby/chruby.sh ]] && { type chruby >/dev/null 2>&1 || chruby () { source /opt/dev/sh/chruby/chruby.sh; chruby "$@"; } }
-
-[[ -x /opt/homebrew/bin/brew ]] && eval $(/opt/homebrew/bin/brew shellenv)
-
-[ -f ~/.local/bin/env ] && . "$HOME/.local/bin/env"
+export PATH="/Users/warnock/.local/bin:$PATH"

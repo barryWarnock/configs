@@ -1,7 +1,9 @@
 * Basic Preferences
 #+begin_src elisp :tangle yes
   ;; word wrap
-  (global-visual-line-mode)
+  ; lets experiment without word wrap for a while, lines shouldn't be allowed to get that long
+  ;(global-visual-line-mode)
+  (setq evil-respect-visual-line-mode t)
   ;; enable using emacsclient from the terminal
   (server-mode 1)
   ;; don't yank replaced text when pasting in visual mode
@@ -28,8 +30,23 @@
     (setq treemacs--icon-size 14))
 
   (setq aw-dispatch-always t)
-  
+
   (setq compilation-scroll-output t)
+
+  ;; use evil in the minibuffer
+  (setq evil-collection-setup-minibuffer t)
+  (evil-collection-init '(helm minibuffer calc))
+
+  ;; load any local themes
+  (with-eval-after-load 'powerline
+    ;; load any local themes
+    (add-to-list 'custom-theme-load-path "~/.emacs/")
+    (load-theme 'nosferatu t))
+
+  ;; I've got a large screen, lets use it
+  (setq fill-column 120)
+  (golden-ratio-mode t)
+  (setq golden-ratio-max-width 130)
 #+end_src
 
 * Helper Functions
@@ -39,10 +56,10 @@
     (if (string-equal evil-state "visual")
         (buffer-substring evil-visual-beginning evil-visual-end)
       ""))
-  
+
   (defun insert-current-date ()
     (interactive)
-    (insert (string-trim (shell-command-to-string "date +'%Y-%m-%d %A'"))))
+    (insert (format-time-string "%Y-%m-%d %A")))
 #+end_src
 
 * Simple Keybinds
@@ -72,6 +89,7 @@
 #+end_src
 
 * Project Configs
+plain text
 #+begin_src elisp :tangle yes
   ;; clearing the p prefix to remove all the existing projectile
   (spacemacs/set-leader-keys "p" nil)
@@ -117,6 +135,17 @@
 
 #+end_src
 
+* Perspective Configs
+#+begin_src elisp :tangle yes
+  (spacemacs/set-leader-keys "bb" 'spacemacs/persp-buffers)
+  (spacemacs/set-leader-keys "bB" 'helm-buffers-list)
+  (spacemacs/declare-prefix "P" "Perspective")
+  (spacemacs/set-leader-keys "Pn" 'persp-add-new)
+  (spacemacs/set-leader-keys "PP" 'spacemacs/helm-perspectives)
+  (spacemacs/set-leader-keys "Ps" 'persp-save-state-to-file)
+  (spacemacs/set-leader-keys "Pl" 'persp-load-state-from-file)
+#+end_src
+
 * Programming Configs
 #+begin_src elisp :tangle yes
   (custom-set-variables '(git-gutter:update-interval 5))
@@ -134,8 +163,9 @@
           (query (format "%s.%s" file-name-query file-ext ))
           (project-root (project-root (project-current t))))
       (find-name-dired project-root query)))
-  (spacemacs/set-leader-keys-for-major-mode 'ruby-mode "tg" 'jump-to-test)
-
+#+end_src
+** Ruby
+#+begin_src elisp :tangle yes
   ;; format ruby files on save
   (defun format-current-rb-file ()
     (interactive)
@@ -145,7 +175,6 @@
                   "style"
                   "-a"
                   (spacemacs/copy-file-path)))
-  (spacemacs/set-leader-keys-for-major-mode 'ruby-mode "==" 'format-current-rb-file)
 
   (advice-add 'lsp-ruby-lsp--build-command :override
               (lambda () '("shadowenv" "exec" "--" "ruby-lsp")))
@@ -154,10 +183,23 @@
   (advice-add 'lsp-sorbet--build-command :override
               (lambda () (pcase (project-name (project-current))
                           ("shopify" lsp-sorbet--base-command)
-                          (t (cl-concatenate 'list lsp-sorbet--base-command
-                                              (list "--dir" (file-relative-name (project-root (project-current)))))))))
+                          (t lsp-sorbet--base-command
+                           ;(cl-concatenate 'list lsp-sorbet--base-command
+                                              ;(list "--dir" (file-relative-name (project-root (project-current)))))
+                             ))))
 
   (setq lsp-disabled-clients '(rubocop-ls typeprof-ls ruby-ls ai-ls ruby-syntax-tree-ls helix-gpt))
+
+  (spacemacs/set-leader-keys-for-major-mode 'ruby-mode "==" 'format-current-rb-file)
+  (spacemacs/set-leader-keys-for-major-mode 'ruby-mode "tg" 'jump-to-test)
+
+  (font-lock-add-keywords 'ruby-mode
+                          '(("#[:|].*" 0 'font-lock-comment-delimiter-face t)))
+  (font-lock-add-keywords 'ruby-ts-mode
+                          '(("#[:|].*" 0 'font-lock-comment-delimiter-face t)))
+
+  (with-eval-after-load 'lsp-mode
+    (push '("\\.rbi$" "ruby") lsp-language-id-configuration))
 #+end_src
 * Org Mode Configs
 this is needed because of the way spacemacs loads org mode
@@ -170,7 +212,7 @@ Helper Functions
 #+begin_src elisp :tangle yes
   ;; return either the current org item or the currently clocked in item
   (defun org-current-or-clock ()
-    (if (org-current-level)
+    (if (equal 'org-mode major-mode)
         nil
       org-clock-marker))
 
@@ -201,8 +243,10 @@ Helper Functions
 
   (defun org-yank-wi-issue-num ()
     (interactive) 
-    (kill-new (wi-issue-num)))
-  
+    (let ((n (wi-issue-num)))
+    (kill-new n)
+    (message n)))
+
   (defun switch-to-org-notes ()
     "Switch to the buffer showing the notes file"
     (interactive)
@@ -211,12 +255,14 @@ Helper Functions
 
 Org agenda and refile configs
 #+begin_src elisp :tangle yes
-  (setq-default org-agenda-files '("~/org" "~/workorg"))
+  (setq-default org-agenda-files '("~/org"))
   (setq-default org-default-notes-file (concat org-directory "/notes.org"))
 
   (setq org-refile-targets
-        '((nil :maxlevel . 3)
-          (org-agenda-files :maxlevel . 1)))
+        '((nil              :maxlevel . 3)
+          (org-agenda-files :maxlevel . 3)
+          (org-buffer-list  :maxlevel . 3)))
+  (setq org-refile-use-outline-path 't)
   ;; save target files after refile
   (add-hook 'org-after-refile-insert-hook 'projectile-save-project-buffers)
 
@@ -230,13 +276,28 @@ Org agenda and refile configs
   (set-archive-heading)
   (add-hook `midnight-hook `set-archive-heading)
 
-  ;; org capture templates
-  (setq org-capture-templates
-        '(("w" "WI" entry (file "~/workorg/issues.org")
-          "* TODO %^{name}%^{link}p\n%?")
-          ("n" "Quick Note" item (file org-default-notes-file)
-          " %?")))
   (setq-default org-capture-bookmark nil)
+
+  ;; return a top level week heading if it's a Monday
+  (defun journal--maybe-week-heading ()
+    (if (string-equal "Monday" (format-time-string "%A"))
+        (format-time-string "* Week of %Y-%m-%d\n")))
+
+  ;; pull in any todo entries marked with a [>] from the previous day
+  (defun journal-pull-bumped-todos ()
+    (interactive)
+    (with-current-buffer "journal.org"
+      (goto-char (point-max))
+      (let* ((previous-day (org-get-entry))
+            (bumped-todos (cl-remove-if-not (lambda (entry)
+                                              (string-match-p "- \\[>]" entry))
+                                            (split-string previous-day "\n"))))
+        (string-join (mapcar (lambda (todo)
+                              (string-replace
+                                "- [>]" "- [ ]"
+                                (string-clean-whitespace todo)))
+                            bumped-todos)
+                    "\n"))))
 
   ;; styling
   (setq org-superstar-leading-bullet ?\s)
